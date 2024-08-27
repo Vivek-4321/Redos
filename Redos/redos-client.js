@@ -1,3 +1,4 @@
+//redos-client.js
 const net = require('net');
 const EventEmitter = require('events');
 
@@ -169,6 +170,15 @@ class RedosClient extends EventEmitter {
     this.connected = false;
     this.subscriptions.clear();
   }
+
+  async setTimeSeries(key, timestamp, value) {
+    return this.sendCommand('setTimeSeries', key, timestamp, value);
+  }
+  
+  async getTimeSeries(key, startTimestamp, endTimestamp) {
+    return this.sendCommand('getTimeSeries', key, startTimestamp, endTimestamp);
+  }
+  
 }
 
 class RedosTransaction {

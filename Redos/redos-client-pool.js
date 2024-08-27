@@ -1,3 +1,4 @@
+//redos-client-pool.js
 const RedosClient = require("./redos-client");
 const EventEmitter = require("events");
 
@@ -170,6 +171,14 @@ class RedosClientPool extends EventEmitter {
 
   publish(channel, message) {
     return this.executeCommand("publish", channel, message);
+  }
+
+  setTimeSeries(key, timestamp, value) {
+    return this.executeCommand("setTimeSeries", key, timestamp, value);
+  }
+  
+  getTimeSeries(key, startTimestamp, endTimestamp) {
+    return this.executeCommand("getTimeSeries", key, startTimestamp, endTimestamp);
   }
 
   async subscribe(channel, callback) {

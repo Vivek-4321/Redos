@@ -13,6 +13,15 @@ async function main() {
     await clientPool.init();
     console.log("Connected to Redos server");
 
+     // TimeSeries operations
+     console.log("\n--- TimeSeries Operations ---");
+     await clientPool.setTimeSeries("temperature", 1628000000, 25.5);
+     await clientPool.setTimeSeries("temperature", 1628000060, 26.0);
+     await clientPool.setTimeSeries("temperature", 1628000120, 26.2);
+     
+     const timeSeriesData = await clientPool.getTimeSeries("temperature", 1628000000, 1628000120);
+     console.log("Temperature TimeSeries data:", timeSeriesData);
+ 
     // Basic operations
     console.log("\n--- Basic Operations ---");
     await clientPool.set("mykey", "Hello, Redos!");
@@ -90,7 +99,8 @@ async function main() {
     // Error handling
     console.log("\n--- Error Handling ---");
     try {
-      await clientPool.sadd("not_a_set", "member");
+      const result = await clientPool.sadd("not_a_set", "member");
+      console.log(result);
     } catch (error) {
       console.error("Expected error:", error.message);
     }
@@ -108,3 +118,5 @@ main().catch((error) => {
   console.error("Error in main:", error);
   process.exit(1);
 });
+
+
